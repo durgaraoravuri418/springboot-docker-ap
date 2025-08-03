@@ -15,19 +15,19 @@ pipeline {
 
         stage('Build with Maven') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t springboot-docker-app .'
+                bat 'docker build -t springboot-docker-app .'
             }
         }
 
         stage('Run Docker Container') {
             steps {
-                sh 'docker run -d -p 8080:8080 --name springboot-app springboot-docker-app'
+                bat 'docker run -d -p 8080:8080 --name springboot-app springboot-docker-app'
             }
         }
     }
