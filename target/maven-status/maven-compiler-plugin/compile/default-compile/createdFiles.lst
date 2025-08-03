@@ -1,0 +1,4 @@
+com\example\demo\DemoApplication.class
+com\example\demo\MessageRepository.class
+com\example\demo\Message.class
+com\example\demo\MessageController.class
