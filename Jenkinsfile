@@ -1,15 +1,21 @@
-
 pipeline {
     agent any
 
     tools {
-        maven 'Maven 3.8.1' // Replace with your installed Maven version in Jenkins
+        maven 'Maven 3.8.1' // Make sure this matches what you configured in Jenkins
     }
 
-   stages {
-        stage('Clone') {
+    environment {
+        IMAGE_NAME = 'springboot-docker-app'
+        CONTAINER_NAME = 'springboot-app'
+        HOST_PORT = '8081'
+        CONTAINER_PORT = '8080'
+    }
+
+    stages {
+        stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/durgaraoravuri418/springboot-docker-ap.git'
+                git 'https://your-repo-url.git' // or skip if already in Jenkins workspace
             }
         }
 
@@ -21,14 +27,30 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t springboot-docker-app .'
+                bat "docker build -t %IMAGE_NAME% ."
             }
         }
 
-        stage('Run Docker Container') {
+        stage('Remove Old Container if Exists') {
             steps {
-                bat 'docker run -d -p 8080:8080 --name springboot-app springboot-docker-app'
+                // Force remove container if it exists (ignore error if not)
+                bat "docker rm -f %CONTAINER_NAME% || echo No old container to remove"
             }
+        }
+
+        stage('Run New Container') {
+            steps {
+                bat "docker run -d -p %HOST_PORT%:%CONTAINER_PORT% --name %CONTAINER_NAME% %IMAGE_NAME%"
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ Deployment successful!'
+        }
+        failure {
+            echo '❌ Build or Deployment failed.'
         }
     }
 }
