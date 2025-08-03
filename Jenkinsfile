@@ -6,10 +6,10 @@ pipeline {
         maven 'Maven 3.8.1' // Replace with your installed Maven version in Jenkins
     }
 
-    stages {
+   stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/durgaraoravuri418/springboot-docker-ap.git'
+                git branch: 'main', url: 'https://github.com/durgaraoravuri418/springboot-docker-ap.git'
             }
         }
 
