@@ -17,8 +17,9 @@ public class MessageController {
         return messageRepository.save(message);
     }
 
-    @GetMapping
-    public List<Message> getAllMessages() {
-        return messageRepository.findAll();
+    @GetMapping("/get")
+    public String getAllMessages() {
+    	return "Testing success";
+        //return messageRepository.findAll();
     }
 }
