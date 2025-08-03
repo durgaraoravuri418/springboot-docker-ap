@@ -12,12 +12,12 @@ pipeline {
         CONTAINER_PORT = '8080'
     }
 
-    stages {
-        stage('Checkout Code') {
-            steps {
-                git 'https://your-repo-url.git' // or skip if already in Jenkins workspace
-            }
-        }
+  stage('Checkout Code') {
+    steps {
+        git branch: 'main', url: 'https://github.com/durgaraoravuri418/springboot-docker-ap.git'
+    }
+}
+
 
         stage('Build with Maven') {
             steps {
