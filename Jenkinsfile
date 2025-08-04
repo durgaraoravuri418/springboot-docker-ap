@@ -53,10 +53,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ Deployment completed with reused container!'
+            echo 'Deployment completed with reused container!'
         }
         failure {
-            echo '❌ Build or deployment failed.'
+            echo 'Build or deployment failed.'
         }
     }
 }
